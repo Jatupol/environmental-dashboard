@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=1440">
-<title>ThaiNamthip Environmental Excellence Dashboard | Demo by Jo</title>
+<title>Demo Environmental Excellence Dashboard | Demo by Jo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script>
 /*!
  * Chart.js v4.4.0
@@ -48,7 +48,7 @@
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
   body {
-    font-family: 'IBM Plex Sans', -apple-system, system-ui, sans-serif;
+    font-family: 'Sarabun', 'TH Sarabun New', -apple-system, system-ui, sans-serif;
     background: var(--bg);
     color: var(--ink);
     font-size: 13px;
@@ -78,13 +78,13 @@
     border-radius: 10px;
     display: grid; place-items: center;
     color: var(--primary);
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Sarabun', 'TH Sarabun New', sans-serif;
     font-weight: 800;
     font-size: 22px;
     letter-spacing: -0.04em;
   }
   .header h1 {
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Sarabun', 'TH Sarabun New', sans-serif;
     font-weight: 800;
     font-size: 20px;
     margin: 0;
@@ -132,13 +132,75 @@
     border: 1px solid var(--line);
     border-radius: 6px;
     background: var(--bg);
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    transition: border-color .15s, background .15s, box-shadow .15s;
   }
+  .filter:hover { border-color: var(--primary); background: white; }
+  .filter.open { border-color: var(--primary); background: white; box-shadow: 0 1px 3px rgba(14,77,61,.15); }
   .filter-label { color: var(--muted); font-weight: 500; }
   .filter-value { color: var(--ink); font-weight: 600; }
-  .filter-chevron { color: var(--muted); font-size: 9px; margin-left: 2px; }
+  .filter-chevron { color: var(--muted); font-size: 9px; margin-left: 2px; transition: transform .15s; }
+  .filter.open .filter-chevron { transform: rotate(180deg); color: var(--primary); }
   .filter-bar .spacer { flex: 1; }
   .last-refresh { color: var(--muted); font-size: 11px; }
   .last-refresh strong { color: var(--ink-2); }
+
+  .filter-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    box-shadow: 0 8px 28px rgba(11,31,51,.14), 0 2px 6px rgba(11,31,51,.06);
+    min-width: 200px;
+    padding: 4px;
+    z-index: 200;
+    font-size: 12px;
+    max-height: 360px;
+    overflow-y: auto;
+  }
+  .filter.open .filter-menu { display: block; }
+  .menu-item {
+    padding: 7px 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    cursor: pointer;
+    color: var(--ink);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .menu-item:hover { background: var(--bg); }
+  .menu-item.active { color: var(--primary); font-weight: 600; }
+  .menu-item .check {
+    width: 14px; height: 14px;
+    border: 1.5px solid var(--line);
+    border-radius: 3px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: white;
+    font-size: 10px;
+    color: white;
+    line-height: 1;
+  }
+  .menu-item.active .check { background: var(--primary); border-color: var(--primary); }
+  .menu-item.active .check::after { content: '✓'; }
+  .menu-divider { height: 1px; background: var(--line); margin: 4px 2px; }
+  .menu-section {
+    padding: 8px 10px 4px 10px;
+    font-size: 9.5px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
 
   /* === KPI ROW === */
   .kpi-row {
@@ -177,7 +239,7 @@
     color: var(--muted);
   }
   .kpi-value {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Sarabun', 'TH Sarabun New', sans-serif;
     font-weight: 700;
     font-size: 22px;
     color: var(--ink);
@@ -232,7 +294,7 @@
     border-bottom: 1px solid var(--line-2);
   }
   .card-title {
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Sarabun', 'TH Sarabun New', sans-serif;
     font-weight: 700;
     font-size: 13.5px;
     color: var(--ink);
@@ -248,7 +310,7 @@
     font-size: 10px;
     color: var(--muted);
     text-align: right;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Sarabun', 'TH Sarabun New', sans-serif;
   }
   .chart-container { position: relative; flex: 1; min-height: 220px; }
 
@@ -285,7 +347,7 @@
     color: white;
     font-weight: 700;
     font-size: 12px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Sarabun', 'TH Sarabun New', sans-serif;
     transition: width 1s ease-out;
   }
   .target-marks {
@@ -294,7 +356,7 @@
     font-size: 10.5px;
     color: var(--muted);
     margin-top: 8px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Sarabun', 'TH Sarabun New', sans-serif;
   }
   .target-marks span strong { color: var(--ink); }
   .target-stats {
@@ -317,7 +379,7 @@
     font-weight: 600;
   }
   .target-stat-value {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Sarabun', 'TH Sarabun New', sans-serif;
     font-weight: 700;
     font-size: 16px;
     color: var(--ink);
@@ -340,39 +402,66 @@
   }
   .dq-label { font-size: 10.5px; color: var(--muted); }
   .dq-value {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Sarabun', 'TH Sarabun New', sans-serif;
     font-size: 14px;
     font-weight: 700;
     color: var(--ink);
     margin-top: 2px;
   }
 
-  /* === FOOTER === */
-  .footer {
-    margin: 18px 28px 24px 28px;
-    padding: 14px 18px;
-    background: var(--canvas);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-    font-size: 11px;
-    color: var(--muted);
-    line-height: 1.5;
-  }
-  .footer strong { color: var(--ink-2); font-weight: 600; }
-  .footer-grid {
+  /* === INFO STRIP (top) === */
+  .info-strip {
     display: grid;
     grid-template-columns: 1.5fr 1fr 1fr;
-    gap: 24px;
+    gap: 14px;
+    padding: 16px 28px 0 28px;
   }
-  .footer-grid h4 {
-    font-family: 'Manrope', sans-serif;
-    margin: 0 0 6px 0;
+  .info-card {
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
     font-size: 11.5px;
-    color: var(--ink);
+    line-height: 1.55;
+    color: var(--ink-2);
+    border-left-width: 4px;
+  }
+  .info-card.method {
+    background: linear-gradient(180deg, #ECFDF5 0%, #FFFFFF 100%);
+    border-left-color: #0E4D3D;
+  }
+  .info-card.sources {
+    background: linear-gradient(180deg, #EFF6FF 0%, #FFFFFF 100%);
+    border-left-color: #2563EB;
+  }
+  .info-card.about {
+    background: linear-gradient(180deg, #FFFBEB 0%, #FFFFFF 100%);
+    border-left-color: #D97706;
+  }
+  .info-card h4 {
+    font-family: 'Sarabun', 'TH Sarabun New', sans-serif;
+    margin: 0 0 8px 0;
+    font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 0.06em;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
+  .info-card h4::before {
+    content: '';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .info-card.method h4 { color: #0E4D3D; }
+  .info-card.method h4::before { background: #0E4D3D; }
+  .info-card.sources h4 { color: #1D4ED8; }
+  .info-card.sources h4::before { background: #2563EB; }
+  .info-card.about h4 { color: #B45309; }
+  .info-card.about h4::before { background: #D97706; }
+  .info-card strong { color: var(--ink); font-weight: 600; }
 
   /* === DECORATIVE === */
   .arrow { display: inline-block; font-style: normal; transform: translateY(-1px); }
@@ -388,7 +477,7 @@
       <div class="logo">TN</div>
       <div>
         <h1>Environmental Excellence Dashboard</h1>
-        <div class="sub">ThaiNamthip Corporation · Sustainability Performance · FY2024–2025</div>
+        <div class="sub">Demo Corporation· Sustainability Performance · FY2024–2025</div>
       </div>
     </div>
     <div class="header-right">
@@ -399,12 +488,55 @@
 
   <!-- ============ FILTER BAR ============ -->
   <div class="filter-bar">
-    <div class="filter"><span class="filter-label">Period</span><span class="filter-value">FY2025</span><span class="filter-chevron">▼</span></div>
-    <div class="filter"><span class="filter-label">Plant</span><span class="filter-value">All (6)</span><span class="filter-chevron">▼</span></div>
-    <div class="filter"><span class="filter-label">Region</span><span class="filter-value">All</span><span class="filter-chevron">▼</span></div>
-    <div class="filter"><span class="filter-label">Scope 2 method</span><span class="filter-value">Market-based</span><span class="filter-chevron">▼</span></div>
+    <div class="filter" data-filter="period">
+      <span class="filter-label">Period</span>
+      <span class="filter-value" id="filter-period-value">FY2025</span>
+      <span class="filter-chevron">▼</span>
+      <div class="filter-menu" id="menu-period"></div>
+    </div>
+    <div class="filter" data-filter="plant">
+      <span class="filter-label">Plant</span>
+      <span class="filter-value" id="filter-plant-value">All (6)</span>
+      <span class="filter-chevron">▼</span>
+      <div class="filter-menu" id="menu-plant"></div>
+    </div>
+    <div class="filter" data-filter="region">
+      <span class="filter-label">Region</span>
+      <span class="filter-value" id="filter-region-value">All</span>
+      <span class="filter-chevron">▼</span>
+      <div class="filter-menu" id="menu-region"></div>
+    </div>
+    <div class="filter" data-filter="scope2">
+      <span class="filter-label">Scope 2 method</span>
+      <span class="filter-value" id="filter-scope2-value">Market-based</span>
+      <span class="filter-chevron">▼</span>
+      <div class="filter-menu" id="menu-scope2"></div>
+    </div>
     <div class="spacer"></div>
     <div class="last-refresh">Source: <strong>SAP S/4HANA</strong> · <strong>SCADA</strong> · <strong>TGO emission factors v2023</strong></div>
+  </div>
+
+  <!-- ============ INFO STRIP ============ -->
+  <div class="info-strip">
+    <div class="info-card method">
+      <h4>Methodology</h4>
+      <strong>Scope 1:</strong> Natural gas combustion · refrigerant fugitives (R-134a) · fleet diesel<br>
+      <strong>Scope 2 (Market):</strong> Grid electricity less rooftop-solar contracts · Thailand grid EF 0.4999 kgCO₂eq/kWh (TGO 2023)<br>
+      <strong>Scope 3:</strong> Cat. 1 (Packaging — PET, glass, Al) · Cat. 4 (Distribution) · Cat. 5 (Waste)
+    </div>
+    <div class="info-card sources">
+      <h4>Data Sources</h4>
+      SAP S/4HANA — utilities, fuel<br>
+      SCADA / Wonderware — production volumes<br>
+      Supplier portal — packaging Bills of Materials<br>
+      TGO Emission Factor Database
+    </div>
+    <div class="info-card about">
+      <h4>About this demo</h4>
+      Built by <strong>Jo (Jatupol Saramek)</strong><br>
+      Power BI mockup using fictional data<br>
+      Plant figures are illustrative only — not actual Demo performance.
+    </div>
   </div>
 
   <!-- ============ KPI ROW ============ -->
@@ -446,7 +578,7 @@
     <div class="card">
       <div class="card-header">
         <div>
-          <div class="card-title">Emissions Mix · FY2025</div>
+          <div class="card-title" id="title-mix">Emissions Mix · FY2025</div>
           <div class="card-sub">Share of total tCO₂eq by GHG Protocol scope</div>
         </div>
         <div class="card-meta">tCO₂eq</div>
@@ -456,7 +588,7 @@
       </div>
       <div class="legend">
         <div class="legend-item"><span class="swatch swatch-s1"></span>Scope 1 — Direct</div>
-        <div class="legend-item"><span class="swatch swatch-s2"></span>Scope 2 — Electricity (Market)</div>
+        <div class="legend-item"><span class="swatch swatch-s2"></span><span id="legend-scope2">Scope 2 — Electricity (Market)</span></div>
         <div class="legend-item"><span class="swatch swatch-s3"></span>Scope 3 — Value chain</div>
       </div>
     </div>
@@ -479,7 +611,7 @@
     <div class="card">
       <div class="card-header">
         <div>
-          <div class="card-title">Emissions by Plant · FY2025</div>
+          <div class="card-title" id="title-plants">Emissions by Plant · FY2025</div>
           <div class="card-sub">Sorted descending — Pathum Thani leads volume; intensity overlay shows efficiency</div>
         </div>
         <div class="card-meta">tCO₂eq</div>
@@ -529,7 +661,7 @@
     <div class="card">
       <div class="card-header">
         <div>
-          <div class="card-title">Scope 3 Decomposition · FY2025</div>
+          <div class="card-title" id="title-scope3">Scope 3 Decomposition · FY2025</div>
           <div class="card-sub">Largest indirect category by tCO₂eq</div>
         </div>
         <div class="card-meta">tCO₂eq</div>
@@ -589,31 +721,6 @@
     </div>
   </div>
 
-  <!-- ============ FOOTER ============ -->
-  <div class="footer">
-    <div class="footer-grid">
-      <div>
-        <h4>Methodology</h4>
-        <strong>Scope 1:</strong> Natural gas combustion · refrigerant fugitives (R-134a) · fleet diesel<br>
-        <strong>Scope 2 (Market):</strong> Grid electricity less rooftop-solar contracts · Thailand grid EF 0.4999 kgCO₂eq/kWh (TGO 2023)<br>
-        <strong>Scope 3:</strong> Cat. 1 (Packaging — PET, glass, Al) · Cat. 4 (Distribution) · Cat. 5 (Waste)
-      </div>
-      <div>
-        <h4>Data Sources</h4>
-        SAP S/4HANA — utilities, fuel<br>
-        SCADA / Wonderware — production volumes<br>
-        Supplier portal — packaging Bills of Materials<br>
-        TGO Emission Factor Database
-      </div>
-      <div>
-        <h4>About this demo</h4>
-        Built by <strong>Jo (Jatupol Saramek)</strong> · VELO Co., Ltd.<br>
-        Power BI mockup using fictional data<br>
-        Plant figures are illustrative only — not actual ThaiNamthip performance.
-      </div>
-    </div>
-  </div>
-
 </div>
 
 <script>
@@ -634,54 +741,356 @@ const COLORS = {
 
 // Helpers
 const fmt = (n) => Math.round(n).toLocaleString('en-US');
-const fmtK = (n) => n >= 1000 ? (n/1000).toFixed(1) + 'k' : Math.round(n);
-const pct = (a, b) => ((a - b) / b) * 100;
+const fmtK = (n) => Math.abs(n) >= 1000 ? (n/1000).toFixed(1) + 'k' : Math.round(n);
+const pct = (a, b) => b ? ((a - b) / b) * 100 : 0;
 
-// ===== KPI render =====
-function renderKPIs() {
-  const k = D.kpi;
-  
-  document.getElementById('kpi-total').innerHTML = `${fmt(k.total_emissions_2025/1000)}<span class="unit">k tCO₂e</span>`;
-  const totalDelta = pct(k.total_emissions_2025, k.total_emissions_2024);
-  document.getElementById('kpi-total-delta').innerHTML = `<span class="arrow">▲</span> ${totalDelta.toFixed(1)}% vs FY24 · production +5.2%`;
-  
-  document.getElementById('kpi-intensity').innerHTML = `${k.carbon_intensity_2025}<span class="unit">gCO₂e/L</span>`;
-  const intDelta = pct(k.carbon_intensity_2025, k.carbon_intensity_2024);
-  document.getElementById('kpi-intensity-delta').innerHTML = `<span class="arrow">▼</span> ${Math.abs(intDelta).toFixed(1)}% YoY (improving)`;
-  
-  document.getElementById('kpi-water').innerHTML = `${k.water_intensity_2025}<span class="unit">L / L</span>`;
-  const wDelta = pct(k.water_intensity_2025, k.water_intensity_2024);
-  document.getElementById('kpi-water-delta').innerHTML = `<span class="arrow">▼</span> ${Math.abs(wDelta).toFixed(1)}% YoY · target 1.50`;
-  
-  document.getElementById('kpi-diversion').innerHTML = `${k.diversion_rate_2025}<span class="unit">%</span>`;
-  const dDelta = k.diversion_rate_2025 - k.diversion_rate_2024;
-  document.getElementById('kpi-diversion-delta').innerHTML = `<span class="arrow">▲</span> +${dDelta.toFixed(1)}pp YoY`;
-  
-  document.getElementById('kpi-renewable').innerHTML = `${k.renewable_share_2025}<span class="unit">%</span>`;
-  document.getElementById('kpi-quality').innerHTML = `${k.verified_pct_2025}<span class="unit">%</span>`;
-  
-  // Progress bar
-  setTimeout(() => {
-    document.getElementById('progress-fill').style.width = k.progress_pct_to_2030 + '%';
-    document.getElementById('progress-fill').textContent = k.progress_pct_to_2030 + '%';
-  }, 200);
-  
-  document.getElementById('m-baseline').textContent = fmt(D.targets.baseline_2015/1000) + 'k';
-  document.getElementById('m-current').textContent = fmt(D.targets.current_2025/1000) + 'k';
-  document.getElementById('m-target').textContent = fmt(D.targets.target_2030/1000) + 'k';
-  
-  const reduced = D.targets.baseline_2015 - D.targets.current_2025;
-  const remaining = D.targets.current_2025 - D.targets.target_2030;
-  document.getElementById('ts-reduced').innerHTML = `${fmt(reduced/1000)}<span class="unit">k tCO₂e</span>`;
-  document.getElementById('ts-remaining').innerHTML = `${fmt(remaining/1000)}<span class="unit">k tCO₂e</span>`;
+// ====== Filter dimensions ======
+const ALL_PLANTS = D.plant_comparison.map(p => p.plant);
+const REGION_TO_PLANTS = {
+  'All':       ALL_PLANTS.slice(),
+  'Central':   ['Pathum Thani', 'Rangsit'],
+  'Northeast': ['Nakhon Ratchasima', 'Khon Kaen'],
+  'South':     ['Hat Yai'],
+  'North':     ['Lampang']
+};
+const PERIOD_GROUPS = [
+  { label: 'Fiscal Year',       items: ['FY2025', 'FY2024'] },
+  { label: 'Half-year (2025)',  items: ['H1 2025', 'H2 2025'] },
+  { label: 'Quarter (2025)',    items: ['Q1 2025', 'Q2 2025', 'Q3 2025', 'Q4 2025'] },
+  { label: 'Half-year (2024)',  items: ['H1 2024', 'H2 2024'] }
+];
+const SCOPE2_OPTIONS = ['Market-based', 'Location-based'];
+// Location-based EF for Thai grid is meaningfully higher than market-based (which deducts renewables).
+// Demo multiplier — illustrative, not actual TGO factor.
+const SCOPE2_MULT = { 'Market-based': 1.0, 'Location-based': 1.40 };
+
+// Production per plant (Mn L) derived from intensity = total / production
+const PLANT_PRODUCTION = {};
+D.plant_comparison.forEach(p => {
+  PLANT_PRODUCTION[p.plant] = (p.scope1 + p.scope2 + p.scope3) / p.intensity;
+});
+const TOTAL_ANNUAL_EMISSIONS = D.plant_comparison.reduce((a,p) => a + p.scope1 + p.scope2 + p.scope3, 0);
+
+const filterState = {
+  period: 'FY2025',
+  plants: new Set(ALL_PLANTS),
+  region: 'All',
+  scope2: 'Market-based'
+};
+
+function periodMonths(p) {
+  const yyyy = (n) => String(n).padStart(2,'0');
+  if (p === 'FY2024') return Array.from({length:12}, (_,i)=>`2024-${yyyy(i+1)}`);
+  if (p === 'FY2025') return Array.from({length:12}, (_,i)=>`2025-${yyyy(i+1)}`);
+  if (p === 'H1 2025') return ['2025-01','2025-02','2025-03','2025-04','2025-05','2025-06'];
+  if (p === 'H2 2025') return ['2025-07','2025-08','2025-09','2025-10','2025-11','2025-12'];
+  if (p === 'H1 2024') return ['2024-01','2024-02','2024-03','2024-04','2024-05','2024-06'];
+  if (p === 'H2 2024') return ['2024-07','2024-08','2024-09','2024-10','2024-11','2024-12'];
+  if (p === 'Q1 2025') return ['2025-01','2025-02','2025-03'];
+  if (p === 'Q2 2025') return ['2025-04','2025-05','2025-06'];
+  if (p === 'Q3 2025') return ['2025-07','2025-08','2025-09'];
+  if (p === 'Q4 2025') return ['2025-10','2025-11','2025-12'];
+  return [];
+}
+function priorPeriodMonths(p) {
+  return periodMonths(p).map(m => {
+    const [y, mo] = m.split('-');
+    return `${parseInt(y,10)-1}-${mo}`;
+  });
+}
+function effectivePlants() {
+  const regionSet = new Set(REGION_TO_PLANTS[filterState.region]);
+  return ALL_PLANTS.filter(p => filterState.plants.has(p) && regionSet.has(p));
 }
 
+function compute() {
+  const months = periodMonths(filterState.period);
+  const priorMonths = priorPeriodMonths(filterState.period);
+  const plants = effectivePlants();
+  const s2mult = SCOPE2_MULT[filterState.scope2];
+
+  const selectedAnnual = plants.reduce((a,name) => {
+    const r = D.plant_comparison.find(x => x.plant === name);
+    return a + r.scope1 + r.scope2 + r.scope3;
+  }, 0);
+  const plantShare = TOTAL_ANNUAL_EMISSIONS ? selectedAnnual / TOTAL_ANNUAL_EMISSIONS : 0;
+  const periodFraction = months.length / 12;
+
+  const monthly = D.monthly_trend
+    .filter(m => months.includes(m.month))
+    .map(m => ({
+      month: m.month,
+      scope1: m.scope1 * plantShare,
+      scope2: m.scope2 * plantShare * s2mult,
+      scope3: m.scope3 * plantShare,
+    }));
+  const periodTotals = monthly.reduce((a,m) => ({
+    scope1: a.scope1 + m.scope1,
+    scope2: a.scope2 + m.scope2,
+    scope3: a.scope3 + m.scope3,
+  }), {scope1:0, scope2:0, scope3:0});
+  const periodTotal = periodTotals.scope1 + periodTotals.scope2 + periodTotals.scope3;
+
+  const priorPeriodTotal = D.monthly_trend
+    .filter(m => priorMonths.includes(m.month))
+    .reduce((a,m) => a + (m.scope1 + m.scope2 * s2mult + m.scope3) * plantShare, 0);
+
+  const plantData = plants.map(name => {
+    const r = D.plant_comparison.find(x => x.plant === name);
+    const scope1 = r.scope1 * periodFraction;
+    const scope2 = r.scope2 * s2mult * periodFraction;
+    const scope3 = r.scope3 * periodFraction;
+    const production = PLANT_PRODUCTION[name] * periodFraction;
+    const intensity = production ? (scope1 + scope2 + scope3) / production : 0;
+    return { plant: name, scope1, scope2, scope3, total: scope1+scope2+scope3, intensity };
+  }).sort((a,b) => b.total - a.total);
+
+  const totalProduction = plants.reduce((a,p) => a + PLANT_PRODUCTION[p], 0) * periodFraction;
+  const carbonIntensity = totalProduction ? periodTotal / totalProduction : 0;
+
+  let priorIntensity = 0;
+  if (priorPeriodTotal > 0 && totalProduction > 0) {
+    priorIntensity = priorPeriodTotal / totalProduction;
+  }
+
+  const s3scale = plantShare * periodFraction;
+  const scope3Breakdown = Object.entries(D.scope3_breakdown).map(([k,v]) => [k, v * s3scale]);
+
+  return {
+    monthly, periodTotals, periodTotal, priorPeriodTotal,
+    plantData, carbonIntensity, priorIntensity,
+    scope3Breakdown, plantShare, periodFraction, s2mult,
+    plantsCount: plants.length
+  };
+}
+
+// Stored chart instances + dynamic state for plugins/tooltips
+const charts = {};
+const dynamic = { periodLabel: 'FY2025', periodTotal: 0, scope3Total: 0, s3SortedFull: 0 };
+
+function applyFilters() {
+  const c = compute();
+  dynamic.periodLabel = filterState.period;
+  dynamic.periodTotal = c.periodTotal;
+  dynamic.scope3Total = c.periodTotals.scope3;
+
+  // Filter chip labels
+  document.getElementById('filter-period-value').textContent = filterState.period;
+  document.getElementById('filter-region-value').textContent = filterState.region;
+  document.getElementById('filter-scope2-value').textContent = filterState.scope2;
+  const ep = effectivePlants();
+  let plantLabel;
+  if (ep.length === 0) plantLabel = 'None';
+  else if (ep.length === ALL_PLANTS.length) plantLabel = `All (${ALL_PLANTS.length})`;
+  else if (ep.length === 1) plantLabel = ep[0];
+  else plantLabel = `${ep.length} plants`;
+  document.getElementById('filter-plant-value').textContent = plantLabel;
+
+  // Card titles + legend
+  document.getElementById('title-mix').textContent = `Emissions Mix · ${filterState.period}`;
+  document.getElementById('title-plants').textContent = `Emissions by Plant · ${filterState.period}`;
+  document.getElementById('title-scope3').textContent = `Scope 3 Decomposition · ${filterState.period}`;
+  document.getElementById('legend-scope2').textContent =
+    `Scope 2 — Electricity (${filterState.scope2 === 'Market-based' ? 'Market' : 'Location'})`;
+
+  // ===== KPI: total emissions =====
+  document.getElementById('kpi-total').innerHTML =
+    `${fmt(c.periodTotal/1000)}<span class="unit">k tCO₂e</span>`;
+  const totalDeltaEl = document.getElementById('kpi-total-delta');
+  if (c.priorPeriodTotal > 0) {
+    const d = pct(c.periodTotal, c.priorPeriodTotal);
+    const arrow = d >= 0 ? '▲' : '▼';
+    totalDeltaEl.className = 'kpi-delta ' + (d >= 0 ? 'up' : 'down');
+    totalDeltaEl.innerHTML = `<span class="arrow">${arrow}</span> ${Math.abs(d).toFixed(1)}% vs prior period`;
+  } else {
+    totalDeltaEl.className = 'kpi-delta flat';
+    totalDeltaEl.innerHTML = `<span class="arrow">—</span> No prior-period data`;
+  }
+
+  // ===== KPI: carbon intensity =====
+  document.getElementById('kpi-intensity').innerHTML =
+    `${c.carbonIntensity.toFixed(1)}<span class="unit">gCO₂e/L</span>`;
+  const intDeltaEl = document.getElementById('kpi-intensity-delta');
+  if (c.priorIntensity > 0) {
+    const d = pct(c.carbonIntensity, c.priorIntensity);
+    const arrow = d >= 0 ? '▲' : '▼';
+    intDeltaEl.className = 'kpi-delta ' + (d >= 0 ? 'up' : 'down');
+    const tag = d <= 0 ? ' (improving)' : '';
+    intDeltaEl.innerHTML = `<span class="arrow">${arrow}</span> ${Math.abs(d).toFixed(1)}% YoY${tag}`;
+  } else {
+    intDeltaEl.className = 'kpi-delta flat';
+    intDeltaEl.innerHTML = '';
+  }
+
+  // ===== KPIs that don't depend on filtered scopes (company-level) =====
+  const k = D.kpi;
+  document.getElementById('kpi-water').innerHTML = `${k.water_intensity_2025}<span class="unit">L / L</span>`;
+  document.getElementById('kpi-water-delta').innerHTML =
+    `<span class="arrow">▼</span> ${Math.abs(pct(k.water_intensity_2025, k.water_intensity_2024)).toFixed(1)}% YoY · target 1.50`;
+  document.getElementById('kpi-diversion').innerHTML = `${k.diversion_rate_2025}<span class="unit">%</span>`;
+  document.getElementById('kpi-diversion-delta').innerHTML =
+    `<span class="arrow">▲</span> +${(k.diversion_rate_2025 - k.diversion_rate_2024).toFixed(1)}pp YoY`;
+  document.getElementById('kpi-renewable').innerHTML = `${k.renewable_share_2025}<span class="unit">%</span>`;
+  document.getElementById('kpi-quality').innerHTML = `${k.verified_pct_2025}<span class="unit">%</span>`;
+
+  // ===== Progress to 2030: annualize current period total =====
+  const annualized = c.periodFraction ? c.periodTotal / c.periodFraction : 0;
+  const baseline = D.targets.baseline_2015;
+  const target = D.targets.target_2030;
+  const progressPct = baseline === target ? 0
+    : Math.max(0, Math.min(100, (baseline - annualized) / (baseline - target) * 100));
+  const pf = document.getElementById('progress-fill');
+  pf.style.width = progressPct.toFixed(0) + '%';
+  pf.textContent = progressPct.toFixed(0) + '%';
+  document.getElementById('m-baseline').textContent = fmt(baseline/1000) + 'k';
+  document.getElementById('m-current').textContent = fmt(annualized/1000) + 'k';
+  document.getElementById('m-target').textContent = fmt(target/1000) + 'k';
+  document.getElementById('ts-reduced').innerHTML =
+    `${fmt((baseline - annualized)/1000)}<span class="unit">k tCO₂e</span>`;
+  document.getElementById('ts-remaining').innerHTML =
+    `${fmt(Math.max(0, annualized - target)/1000)}<span class="unit">k tCO₂e</span>`;
+
+  // ===== Charts =====
+  if (charts.donut) {
+    const data = [c.periodTotals.scope1, c.periodTotals.scope2, c.periodTotals.scope3];
+    const pcts = data.map(v => c.periodTotal ? (v/c.periodTotal*100).toFixed(1) : '0.0');
+    const s2tag = filterState.scope2 === 'Market-based' ? 'Market' : 'Location';
+    charts.donut.data.datasets[0].data = data;
+    charts.donut.data.labels = [
+      `Scope 1 (${pcts[0]}%)`,
+      `Scope 2 ${s2tag} (${pcts[1]}%)`,
+      `Scope 3 (${pcts[2]}%)`
+    ];
+    charts.donut.update();
+  }
+  if (charts.monthly) {
+    charts.monthly.data.labels = c.monthly.map(m => m.month);
+    charts.monthly.data.datasets[0].data = c.monthly.map(m => m.scope1);
+    charts.monthly.data.datasets[1].data = c.monthly.map(m => m.scope2);
+    charts.monthly.data.datasets[2].data = c.monthly.map(m => m.scope3);
+    charts.monthly.update();
+  }
+  if (charts.plants) {
+    charts.plants._plantData = c.plantData;
+    charts.plants.data.labels = c.plantData.map(p => p.plant);
+    charts.plants.data.datasets[0].data = c.plantData.map(p => p.scope1);
+    charts.plants.data.datasets[1].data = c.plantData.map(p => p.scope2);
+    charts.plants.data.datasets[2].data = c.plantData.map(p => p.scope3);
+    charts.plants.update();
+  }
+  if (charts.scope3) {
+    const sorted = [...c.scope3Breakdown].sort((a,b) => b[1] - a[1]);
+    charts.scope3.data.labels = sorted.map(d => d[0]);
+    charts.scope3.data.datasets[0].data = sorted.map(d => d[1]);
+    charts.scope3.update();
+  }
+  if (charts.intensity) {
+    const sorted = [...c.plantData].sort((a,b) => a.intensity - b.intensity);
+    charts.intensity.data.labels = sorted.map(p => p.plant);
+    charts.intensity.data.datasets[0].data = sorted.map(p => p.intensity);
+    charts.intensity.data.datasets[0].backgroundColor = sorted.map((p, i) => {
+      if (sorted.length <= 1) return COLORS.good;
+      if (i === 0) return COLORS.good;
+      if (i === sorted.length - 1) return COLORS.scope2;
+      return '#10B981';
+    });
+    charts.intensity.update();
+  }
+}
+
+// ====== Dropdown menu UI ======
+function menuItem(label, isActiveFn, onClickFn) {
+  const div = document.createElement('div');
+  div.className = 'menu-item' + (isActiveFn() ? ' active' : '');
+  div.innerHTML = `<span class="check"></span><span>${label}</span>`;
+  div.addEventListener('click', (e) => { e.stopPropagation(); onClickFn(); });
+  return div;
+}
+function menuDivider() { const d = document.createElement('div'); d.className = 'menu-divider'; return d; }
+function menuSection(text) {
+  const d = document.createElement('div');
+  d.className = 'menu-section';
+  d.textContent = text;
+  return d;
+}
+function buildMenus() {
+  const periodMenu = document.getElementById('menu-period');
+  periodMenu.innerHTML = '';
+  PERIOD_GROUPS.forEach((grp, gi) => {
+    if (gi > 0) periodMenu.appendChild(menuDivider());
+    periodMenu.appendChild(menuSection(grp.label));
+    grp.items.forEach(opt => {
+      periodMenu.appendChild(menuItem(opt,
+        () => filterState.period === opt,
+        () => { filterState.period = opt; closeAllMenus(); buildMenus(); applyFilters(); }
+      ));
+    });
+  });
+
+  const plantMenu = document.getElementById('menu-plant');
+  plantMenu.innerHTML = '';
+  plantMenu.appendChild(menuItem('Select all',
+    () => filterState.plants.size === ALL_PLANTS.length,
+    () => {
+      filterState.plants = filterState.plants.size === ALL_PLANTS.length
+        ? new Set() : new Set(ALL_PLANTS);
+      buildMenus(); applyFilters();
+    }
+  ));
+  plantMenu.appendChild(menuDivider());
+  ALL_PLANTS.forEach(p => {
+    plantMenu.appendChild(menuItem(p,
+      () => filterState.plants.has(p),
+      () => {
+        if (filterState.plants.has(p)) filterState.plants.delete(p);
+        else filterState.plants.add(p);
+        buildMenus(); applyFilters();
+      }
+    ));
+  });
+
+  const regionMenu = document.getElementById('menu-region');
+  regionMenu.innerHTML = '';
+  Object.keys(REGION_TO_PLANTS).forEach(r => {
+    regionMenu.appendChild(menuItem(r,
+      () => filterState.region === r,
+      () => { filterState.region = r; closeAllMenus(); buildMenus(); applyFilters(); }
+    ));
+  });
+
+  const s2Menu = document.getElementById('menu-scope2');
+  s2Menu.innerHTML = '';
+  SCOPE2_OPTIONS.forEach(opt => {
+    s2Menu.appendChild(menuItem(opt,
+      () => filterState.scope2 === opt,
+      () => { filterState.scope2 = opt; closeAllMenus(); buildMenus(); applyFilters(); }
+    ));
+  });
+}
+function closeAllMenus() {
+  document.querySelectorAll('.filter.open').forEach(f => f.classList.remove('open'));
+}
+document.querySelectorAll('.filter[data-filter]').forEach(filter => {
+  filter.addEventListener('click', (e) => {
+    if (e.target.closest('.filter-menu')) return; // clicks inside menu handle themselves
+    e.stopPropagation();
+    const wasOpen = filter.classList.contains('open');
+    closeAllMenus();
+    if (!wasOpen) filter.classList.add('open');
+  });
+});
+document.querySelectorAll('.filter-menu').forEach(menu => {
+  menu.addEventListener('click', (e) => e.stopPropagation());
+});
+document.addEventListener('click', closeAllMenus);
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAllMenus(); });
+
 // ====== Chart defaults ======
-Chart.defaults.font.family = "'IBM Plex Sans', sans-serif";
+Chart.defaults.font.family = "'Sarabun', 'TH Sarabun New', sans-serif";
 Chart.defaults.font.size = 11;
 Chart.defaults.color = COLORS.ink;
 Chart.defaults.plugins.tooltip.backgroundColor = '#0B1F33';
-Chart.defaults.plugins.tooltip.titleFont = { weight: '600', size: 11, family: 'Manrope' };
+Chart.defaults.plugins.tooltip.titleFont = { weight: '600', size: 11, family: 'Sarabun' };
 Chart.defaults.plugins.tooltip.padding = 10;
 Chart.defaults.plugins.tooltip.cornerRadius = 6;
 Chart.defaults.plugins.tooltip.borderColor = '#1F3F5C';
@@ -689,12 +1098,12 @@ Chart.defaults.plugins.tooltip.borderWidth = 1;
 Chart.defaults.plugins.legend.display = false;
 
 // ====== Donut Scope ======
-new Chart(document.getElementById('chart-scope-donut'), {
+charts.donut = new Chart(document.getElementById('chart-scope-donut'), {
   type: 'doughnut',
   data: {
-    labels: ['Scope 1 (5.9%)', 'Scope 2 Market (23.8%)', 'Scope 3 (70.3%)'],
+    labels: ['Scope 1', 'Scope 2', 'Scope 3'],
     datasets: [{
-      data: [D.scope_breakdown_2025['Scope 1'], D.scope_breakdown_2025['Scope 2 (Market)'], D.scope_breakdown_2025['Scope 3']],
+      data: [0, 0, 0],
       backgroundColor: [COLORS.scope1, COLORS.scope2, COLORS.scope3],
       borderWidth: 0,
       hoverOffset: 8,
@@ -704,10 +1113,14 @@ new Chart(document.getElementById('chart-scope-donut'), {
     cutout: '62%',
     maintainAspectRatio: false,
     responsive: true,
+    animation: { duration: 400 },
     plugins: {
       tooltip: {
         callbacks: {
-          label: (ctx) => `${fmt(ctx.parsed)} tCO₂eq (${(ctx.parsed/D.kpi.total_emissions_2025*100).toFixed(1)}%)`
+          label: (ctx) => {
+            const total = dynamic.periodTotal || 1;
+            return `${fmt(ctx.parsed)} tCO₂eq (${(ctx.parsed/total*100).toFixed(1)}%)`;
+          }
         }
       }
     }
@@ -721,13 +1134,13 @@ new Chart(document.getElementById('chart-scope-donut'), {
       ctx.save();
       ctx.textAlign = 'center';
       ctx.fillStyle = COLORS.muted;
-      ctx.font = "600 10px 'IBM Plex Sans'";
-      ctx.fillText('TOTAL FY2025', cx, cy - 18);
+      ctx.font = "600 10px 'Sarabun'";
+      ctx.fillText('TOTAL ' + (dynamic.periodLabel || '').toUpperCase(), cx, cy - 18);
       ctx.fillStyle = COLORS.ink;
-      ctx.font = "700 22px 'JetBrains Mono'";
-      ctx.fillText('147.0k', cx, cy + 5);
+      ctx.font = "700 22px 'Sarabun'";
+      ctx.fillText(fmtK(dynamic.periodTotal || 0), cx, cy + 5);
       ctx.fillStyle = COLORS.muted;
-      ctx.font = "500 10.5px 'IBM Plex Sans'";
+      ctx.font = "500 10.5px 'Sarabun'";
       ctx.fillText('tCO₂eq', cx, cy + 22);
       ctx.restore();
     }
@@ -735,14 +1148,14 @@ new Chart(document.getElementById('chart-scope-donut'), {
 });
 
 // ====== Monthly stacked area ======
-new Chart(document.getElementById('chart-monthly-trend'), {
+charts.monthly = new Chart(document.getElementById('chart-monthly-trend'), {
   type: 'bar',
   data: {
-    labels: D.monthly_trend.map(m => m.month),
+    labels: [],
     datasets: [
-      { label: 'Scope 1', data: D.monthly_trend.map(m => m.scope1), backgroundColor: COLORS.scope1, borderRadius: 0, stack: 'a' },
-      { label: 'Scope 2', data: D.monthly_trend.map(m => m.scope2), backgroundColor: COLORS.scope2, borderRadius: 0, stack: 'a' },
-      { label: 'Scope 3', data: D.monthly_trend.map(m => m.scope3), backgroundColor: COLORS.scope3, borderRadius: { topLeft: 3, topRight: 3 }, stack: 'a' },
+      { label: 'Scope 1', data: [], backgroundColor: COLORS.scope1, borderRadius: 0, stack: 'a' },
+      { label: 'Scope 2', data: [], backgroundColor: COLORS.scope2, borderRadius: 0, stack: 'a' },
+      { label: 'Scope 3', data: [], backgroundColor: COLORS.scope3, borderRadius: { topLeft: 3, topRight: 3 }, stack: 'a' },
     ]
   },
   options: {
@@ -773,14 +1186,14 @@ new Chart(document.getElementById('chart-monthly-trend'), {
 });
 
 // ====== Plant comparison ======
-new Chart(document.getElementById('chart-plants'), {
+charts.plants = new Chart(document.getElementById('chart-plants'), {
   type: 'bar',
   data: {
-    labels: D.plant_comparison.map(p => p.plant),
+    labels: [],
     datasets: [
-      { label: 'Scope 1', data: D.plant_comparison.map(p => p.scope1), backgroundColor: COLORS.scope1, stack: 'a' },
-      { label: 'Scope 2', data: D.plant_comparison.map(p => p.scope2), backgroundColor: COLORS.scope2, stack: 'a' },
-      { label: 'Scope 3', data: D.plant_comparison.map(p => p.scope3), backgroundColor: COLORS.scope3, stack: 'a', borderRadius: { topRight: 3, bottomRight: 3 } },
+      { label: 'Scope 1', data: [], backgroundColor: COLORS.scope1, stack: 'a' },
+      { label: 'Scope 2', data: [], backgroundColor: COLORS.scope2, stack: 'a' },
+      { label: 'Scope 3', data: [], backgroundColor: COLORS.scope3, stack: 'a', borderRadius: { topRight: 3, bottomRight: 3 } },
     ]
   },
   options: {
@@ -799,7 +1212,8 @@ new Chart(document.getElementById('chart-plants'), {
           footer: (items) => {
             const total = items.reduce((a, i) => a + i.parsed.x, 0);
             const idx = items[0].dataIndex;
-            const intensity = D.plant_comparison[idx].intensity;
+            const data = charts.plants._plantData || [];
+            const intensity = data[idx] ? data[idx].intensity.toFixed(1) : '—';
             return `Total: ${fmt(total)} tCO₂e\nIntensity: ${intensity} gCO₂e/L`;
           }
         }
@@ -809,13 +1223,12 @@ new Chart(document.getElementById('chart-plants'), {
 });
 
 // ====== Scope 3 horizontal ======
-const s3Data = Object.entries(D.scope3_breakdown).sort((a,b) => b[1] - a[1]);
-new Chart(document.getElementById('chart-scope3'), {
+charts.scope3 = new Chart(document.getElementById('chart-scope3'), {
   type: 'bar',
   data: {
-    labels: s3Data.map(d => d[0]),
+    labels: [],
     datasets: [{
-      data: s3Data.map(d => d[1]),
+      data: [],
       backgroundColor: ['#6366F1', '#8B5CF6', '#A78BFA', '#C4B5FD'],
       borderRadius: { topRight: 4, bottomRight: 4 },
       barPercentage: 0.7,
@@ -832,7 +1245,10 @@ new Chart(document.getElementById('chart-scope3'), {
     plugins: {
       tooltip: {
         callbacks: {
-          label: (ctx) => `${fmt(ctx.parsed.x)} tCO₂eq (${(ctx.parsed.x / D.scope_breakdown_2025['Scope 3'] * 100).toFixed(1)}%)`
+          label: (ctx) => {
+            const t = dynamic.scope3Total || 1;
+            return `${fmt(ctx.parsed.x)} tCO₂eq (${(ctx.parsed.x / t * 100).toFixed(1)}%)`;
+          }
         }
       }
     }
@@ -840,19 +1256,13 @@ new Chart(document.getElementById('chart-scope3'), {
 });
 
 // ====== Carbon intensity by plant (sorted asc - best first) ======
-const intensityData = [...D.plant_comparison].sort((a, b) => a.intensity - b.intensity);
-new Chart(document.getElementById('chart-intensity'), {
+charts.intensity = new Chart(document.getElementById('chart-intensity'), {
   type: 'bar',
   data: {
-    labels: intensityData.map(p => p.plant),
+    labels: [],
     datasets: [{
-      data: intensityData.map(p => p.intensity),
-      backgroundColor: intensityData.map((p, i) => {
-        // gradient from green (best) to amber (worst)
-        if (i === 0) return COLORS.good;
-        if (i === intensityData.length - 1) return COLORS.scope2;
-        return '#10B981';
-      }),
+      data: [],
+      backgroundColor: [],
       borderRadius: { topRight: 3, bottomRight: 3 },
       barPercentage: 0.7,
     }]
@@ -866,12 +1276,13 @@ new Chart(document.getElementById('chart-intensity'), {
       y: { grid: { display: false }, ticks: { color: COLORS.ink, font: { size: 11, weight: 500 } } }
     },
     plugins: {
-      tooltip: { callbacks: { label: (ctx) => `${ctx.parsed.x} gCO₂e per L` } }
+      tooltip: { callbacks: { label: (ctx) => `${ctx.parsed.x.toFixed(1)} gCO₂e per L` } }
     }
   }
 });
 
-renderKPIs();
+buildMenus();
+applyFilters();
 </script>
 </body>
 </html>

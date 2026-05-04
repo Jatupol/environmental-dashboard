@@ -8,7 +8,7 @@ This is a **portfolio demonstration** prepared by Jatupol Saramek for Environmen
 
 ## ⚠️ Disclaimer
 
-All data in this dashboard is **fictional** and generated for portfolio purposes. Plant locations approximate Coca-Cola Thailand (ThaiNamthip) operations but values do **not** reflect actual ThaiNamthip performance. The methodology, frameworks, and engineering patterns are real and production-grade.
+All data in this dashboard is **fictional** and generated for portfolio purposes. Plant locations approximate Coca-Cola Thailand (Demo) operations but values do **not** reflect actual Demo performance. The methodology, frameworks, and engineering patterns are real and production-grade.
 
 ## What's inside
 
@@ -37,7 +37,7 @@ All data in this dashboard is **fictional** and generated for portfolio purposes
 ## Tech stack
 
 - **Visualization:** HTML5, CSS3, Chart.js 4.4 (inlined for offline viewing)
-- **Typography:** Manrope (display), IBM Plex Sans (body), JetBrains Mono (numerics)
+- **Typography:** TH Sarabun (Sarabun web font) for display, body, and numerics
 - **Methodology equivalent in Power BI:** Star schema with Plants dimension, time-series fact tables, _Date table, 25+ DAX measures including time-intelligence and progress-to-target patterns
 
 ## About the author
