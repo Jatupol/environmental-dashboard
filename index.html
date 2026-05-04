@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jatupol Saramek — Environmental Excellence Dashboard Portfolio</title>
+<meta name="description" content="Portfolio demonstration: Multi-plant beverage operation environmental performance dashboard built with GHG Protocol, ISO 14064, and TGO methodology.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFBFC;
+    --canvas: #FFFFFF;
+    --ink: #0B1F33;
+    --ink-2: #324B62;
+    --muted: #6B7C8E;
+    --line: #E2E7ED;
+    --primary: #0E4D3D;
+    --primary-light: #14B8A6;
+    --accent: #DC2626;
+    --shadow: 0 1px 2px rgba(11,31,51,.04), 0 1px 3px rgba(11,31,51,.06);
+    --shadow-lg: 0 4px 16px rgba(11,31,51,.08), 0 1px 3px rgba(11,31,51,.04);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { scroll-behavior: smooth; }
+  body {
+    font-family: 'IBM Plex Sans', -apple-system, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* === HERO === */
+  .hero {
+    background: linear-gradient(135deg, #0E4D3D 0%, #11633A 60%, #14B8A6 100%);
+    color: white;
+    padding: 64px 24px 80px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -150px; right: -150px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -100px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+  }
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .author-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+  .author-badge .dot {
+    width: 8px; height: 8px;
+    background: #4ADE80;
+    border-radius: 50%;
+    box-shadow: 0 0 12px #4ADE80;
+  }
+  .hero h1 {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 800;
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+  .hero h1 .accent { color: #FFE082; }
+  .hero p.lead {
+    font-size: clamp(16px, 2vw, 19px);
+    line-height: 1.55;
+    max-width: 760px;
+    opacity: 0.92;
+    margin-bottom: 36px;
+    font-weight: 400;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 24px;
+    border-radius: 8px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+  }
+  .btn-primary {
+    background: white;
+    color: var(--primary);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  }
+  .btn-secondary {
+    background: rgba(255,255,255,0.12);
+    color: white;
+    border-color: rgba(255,255,255,0.25);
+    backdrop-filter: blur(4px);
+  }
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.2);
+  }
+
+  /* === DISCLAIMER STRIP === */
+  .disclaimer {
+    background: #FEF3C7;
+    border-top: 1px solid #FCD34D;
+    border-bottom: 1px solid #FCD34D;
+    padding: 14px 24px;
+    text-align: center;
+    font-size: 13px;
+    color: #92400E;
+  }
+  .disclaimer strong { font-weight: 700; }
+
+  /* === STATS BAND === */
+  .stats {
+    background: white;
+    padding: 48px 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 32px;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 8px;
+    font-weight: 500;
+  }
+
+  /* === SECTIONS === */
+  section.content {
+    padding: 64px 24px;
+  }
+  section.alt {
+    background: white;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  h2.section-title {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 800;
+    font-size: 32px;
+    color: var(--ink);
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+  }
+  h2.section-title .num {
+    color: var(--primary-light);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    margin-right: 12px;
+    font-weight: 600;
+  }
+  .section-sub {
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 36px;
+    max-width: 720px;
+  }
+
+  /* === FEATURE GRID === */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .feature {
+    background: white;
+    padding: 28px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+  }
+  .feature-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #E8F0EC, #D1EAE0);
+    color: var(--primary);
+    font-size: 20px;
+  }
+  .feature h3 {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .feature p {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.6;
+  }
+
+  /* === FRAMEWORKS === */
+  .frameworks {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+  .framework-tag {
+    padding: 8px 14px;
+    background: var(--canvas);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--ink-2);
+    font-weight: 500;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .framework-tag.primary {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+  }
+
+  /* === DASHBOARD PREVIEW CTA === */
+  .dashboard-cta {
+    background: linear-gradient(135deg, #0B1F33 0%, #1E406B 100%);
+    color: white;
+    padding: 64px 24px;
+    text-align: center;
+    border-radius: 16px;
+    margin: 32px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .dashboard-cta::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at 70% 30%, rgba(20, 184, 166, 0.15) 0%, transparent 40%);
+  }
+  .dashboard-cta-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .dashboard-cta h2 {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+  }
+  .dashboard-cta p {
+    opacity: 0.85;
+    margin-bottom: 24px;
+  }
+  .btn-cta {
+    background: #14B8A6;
+    color: white;
+    padding: 16px 32px;
+    font-size: 16px;
+  }
+  .btn-cta:hover {
+    background: #0F9A8B;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(20,184,166,0.4);
+  }
+
+  /* === ABOUT === */
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .about-card {
+    background: white;
+    padding: 32px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+  }
+  .about-card h3 {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+  .about-card ul {
+    list-style: none;
+  }
+  .about-card li {
+    padding: 8px 0;
+    font-size: 14px;
+    color: var(--ink-2);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .about-card li:last-child { border-bottom: none; }
+  .about-card li strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .about-card .badge {
+    background: var(--primary);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .about-card .badge.dev {
+    background: #F59E0B;
+  }
+
+  /* === CONTACT === */
+  .contact {
+    background: var(--ink);
+    color: white;
+    padding: 48px 24px;
+    text-align: center;
+  }
+  .contact h2 {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .contact p {
+    opacity: 0.7;
+    margin-bottom: 24px;
+  }
+  .contact-links {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 15px;
+  }
+  .contact-links a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+  }
+  .contact-links a:hover { opacity: 1; }
+
+  footer.foot {
+    text-align: center;
+    padding: 24px;
+    font-size: 12px;
+    color: var(--muted);
+    background: var(--bg);
+  }
+
+  @media (max-width: 720px) {
+    .about { grid-template-columns: 1fr; }
+    .hero { padding: 48px 20px 56px 20px; }
+    section.content { padding: 48px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============== HERO ============== -->
+<section class="hero">
+  <div class="container">
+    <div class="author-badge">
+      <span class="dot"></span>
+      <span>Portfolio Demonstration · Available for Environmental Excellence Manager opportunities</span>
+    </div>
+    <h1>
+      Environmental Excellence<br>
+      Dashboard <span class="accent">— Portfolio</span>
+    </h1>
+    <p class="lead">
+      A working multi-plant sustainability performance dashboard built to demonstrate Scope 1/2/3 emissions
+      tracking, water and waste KPIs, and SBTi-aligned target reporting — using methodology aligned with
+      GHG Protocol, ISO 14064-1, and TGO Carbon Footprint standards.
+    </p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="dashboard.html">
+        View Live Dashboard →
+      </a>
+      <a class="btn btn-secondary" href="#about">
+        About the Project
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== DISCLAIMER ============== -->
+<div class="disclaimer">
+  <strong>⚠ Demonstration data:</strong> All figures are <strong>fictional</strong> and generated for portfolio purposes.
+  Plant locations approximate Coca-Cola Thailand operations but values do not reflect actual ThaiNamthip performance.
+</div>
+
+<!-- ============== STATS ============== -->
+<div class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div>
+        <div class="stat-num">147k</div>
+        <div class="stat-label">tCO₂eq tracked across<br>Scope 1, 2 & 3</div>
+      </div>
+      <div>
+        <div class="stat-num">6</div>
+        <div class="stat-label">Plants modeled<br>across 4 regions</div>
+      </div>
+      <div>
+        <div class="stat-num">432</div>
+        <div class="stat-label">Monthly data points<br>over 24 months</div>
+      </div>
+      <div>
+        <div class="stat-num">25+</div>
+        <div class="stat-label">DAX measures &<br>Power BI patterns</div>
+      </div>
+      <div>
+        <div class="stat-num">5</div>
+        <div class="stat-label">Reporting frameworks<br>referenced</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============== METHODOLOGY ============== -->
+<section class="content" id="about">
+  <div class="container">
+    <h2 class="section-title"><span class="num">01</span>Methodology & Frameworks</h2>
+    <p class="section-sub">
+      Built on internationally recognized standards. Every emission factor is documented and traceable — designed
+      to be defensible under third-party verification, not just visually polished.
+    </p>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">📐</div>
+        <h3>GHG Protocol Corporate Standard</h3>
+        <p>Scope 1 (direct), Scope 2 (electricity — both location and market based), and Scope 3
+        (value chain) inventory structure following the WRI/WBCSD Corporate Standard and Scope 2 Guidance.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📊</div>
+        <h3>ISO 14064-1:2018</h3>
+        <p>Boundary setting via operational control approach, with audit trail design supporting
+        ISO 14064-3 third-party verification readiness.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🇹🇭</div>
+        <h3>TGO Methodology</h3>
+        <p>Carbon Footprint for Organization (CFO) calculation framework with Thailand grid emission
+        factor of 0.4999 kgCO₂eq/kWh from TGO 2023 reference.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🌍</div>
+        <h3>GRI 305 / CDP / SBTi</h3>
+        <p>Reporting structure aligned with Global Reporting Initiative emissions standard,
+        CDP Climate questionnaire, and Science-Based Targets initiative methodology.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📦</div>
+        <h3>Ecoinvent 3.9 + IPCC AR5</h3>
+        <p>Packaging materials (PET, glass, aluminum) from Ecoinvent database; refrigerant emissions
+        using IPCC AR5 GWP100 values.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🎯</div>
+        <h3>2030 Reduction Target</h3>
+        <p>25% absolute reduction vs 2015 baseline aligned with Coca-Cola System SBTi commitment,
+        with progress-to-target tracking and gap analysis.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== DASHBOARD CTA ============== -->
+<section class="content alt">
+  <div class="container">
+    <div class="dashboard-cta">
+      <div class="dashboard-cta-inner">
+        <h2>Ready to explore the dashboard?</h2>
+        <p>Interactive Scope 1/2/3 breakdown, monthly trends with seasonal patterns, plant comparisons, and
+        progress-to-target tracking. Best viewed on desktop.</p>
+        <a class="btn btn-cta" href="dashboard.html">
+          Open Dashboard →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== ABOUT THE BUILDER ============== -->
+<section class="content">
+  <div class="container">
+    <h2 class="section-title"><span class="num">02</span>About this project</h2>
+    <p class="section-sub">
+      Why it was built and what it represents — a self-directed learning artifact to demonstrate the
+      bridge between manufacturing data architecture and environmental KPI systems.
+    </p>
+
+    <div class="about">
+      <div class="about-card">
+        <h3>The Author</h3>
+        <ul>
+          <li><span>Name</span><strong>Jatupol Saramek</strong></li>
+          <li><span>Experience</span><strong>19+ years manufacturing IT</strong></li>
+          <li><span>Most recent</span><strong>8.5 yrs · Cargill Meat (7 plants)</strong></li>
+          <li><span>Power BI</span><strong>25+ enterprise dashboards</strong></li>
+          <li><span>Education</span><strong>MSc Computer Science (NIDA)</strong></li>
+          <li><span>Location</span><strong>Ayutthaya, Thailand</strong></li>
+        </ul>
+      </div>
+      <div class="about-card">
+        <h3>Capability Status</h3>
+        <ul>
+          <li><span>Power BI / DAX</span><span class="badge">Expert</span></li>
+          <li><span>Multi-plant data integration</span><span class="badge">Expert</span></li>
+          <li><span>SQL Server / SAP</span><span class="badge">Expert</span></li>
+          <li><span>GHG Protocol Scope methodology</span><span class="badge dev">Active dev</span></li>
+          <li><span>ISO 14064-1 framework</span><span class="badge dev">Active dev</span></li>
+          <li><span>TGO CFO certification</span><span class="badge dev">Planned 2026</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== AVAILABLE ON REQUEST ============== -->
+<section class="content alt">
+  <div class="container">
+    <h2 class="section-title"><span class="num">03</span>Available on request</h2>
+    <p class="section-sub">
+      The complete portfolio package — including the underlying data model, DAX measure library, and
+      implementation guide — is available for review during the interview process or upon request.
+    </p>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">📊</div>
+        <h3>Sample Dataset</h3>
+        <p>Excel workbook with 432 records: production volumes, energy and water consumption, full Scope
+        1/2/3 emissions breakdown, waste streams, targets, and emission factor reference table — across
+        6 plants and 24 months.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">⚙️</div>
+        <h3>DAX Measures Library</h3>
+        <p>25+ production-ready DAX measures covering total emissions, intensity ratios, year-over-year
+        comparisons, progress-to-target tracking, data quality indicators, and KPI formatting patterns.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📖</div>
+        <h3>Implementation Guide</h3>
+        <p>Step-by-step documentation for porting this design to Power BI Desktop: data model setup,
+        relationships, _Date table creation, measure definitions, and visual layout specifications.</p>
+      </div>
+    </div>
+
+    <p style="text-align:center; margin-top: 32px; color: var(--muted); font-size: 14px;">
+      Reach out via the contact details below — happy to walk through any aspect of the design.
+    </p>
+  </div>
+</section>
+
+<!-- ============== CONTACT ============== -->
+<section class="contact">
+  <div class="container">
+    <h2>Open to opportunities</h2>
+    <p>Available for Environmental Excellence Manager and Sustainability Data leadership roles.</p>
+    <div class="contact-links">
+      <a href="mailto:jatupol.sa@gmail.com">📧 jatupol.sa@gmail.com</a>
+      <a href="https://www.linkedin.com/in/jatupol-saramek/" target="_blank" rel="noopener">💼 LinkedIn</a>
+      <a href="https://github.com/Jatupol" target="_blank" rel="noopener">⌨ GitHub</a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  Built with care · Data fictional · Methodology real · © 2026 Jatupol Saramek
+</footer>
+
+</body>
+</html>
